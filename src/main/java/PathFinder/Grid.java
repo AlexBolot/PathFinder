@@ -12,8 +12,9 @@ public class Grid extends Observable
     private int             height;
     private ArrayList<Case> listToExplore;
     private ArrayList<Case> listExplored;
+    private ArrayList<Case> listMurs;
     
-    Grid (Case Depart, Case Arrivee, int Width, int Height, Observer observer)
+    Grid (Case Depart, Case Arrivee, int Width, int Height, ArrayList<Case> ListMurs, Observer observer)
     {
         this.addObserver(observer);
         depart = Depart;
@@ -22,6 +23,7 @@ public class Grid extends Observable
         height = Height;
         listToExplore = new ArrayList<Case>();
         listExplored = new ArrayList<Case>();
+        listMurs = ListMurs;
         
         listToExplore.add(depart);
     }
@@ -93,45 +95,44 @@ public class Grid extends Observable
             if(opportunite.equals(depart))
             {
                 //region ...
-                if(isInGrid(col - 1, row)) gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
-                if(isInGrid(col + 1, row)) droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
-                if(isInGrid(col, row - 1)) bas = new Case(col, row - 1, valG + 1, opportunite, arrivee);
-                if(isInGrid(col, row + 1)) haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
+                if(isValid(col - 1, row)) gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
+                if(isValid(col + 1, row)) droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
+                if(isValid(col, row - 1)) bas = new Case(col, row - 1, valG + 1, opportunite, arrivee);
+                if(isValid(col, row + 1)) haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
                 
                 listNewCases.add(gauche);
                 listNewCases.add(droite);
                 listNewCases.add(bas);
                 listNewCases.add(haut);
                 //endregion
-                
             }
             else
             {
                 //region ...
                 Case parent = opportunite.getParent();
                 //( -1 , 0 )
-                if(isInGrid(col - 1, row) && !parent.equals(col - 1, row))
+                if(isValid(col - 1, row) && !parent.equals(col - 1, row))
                 {
                     gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
                     listNewCases.add(gauche);
                 }
                 
                 //( +1 , 0 )
-                if(isInGrid(col + 1, row) && !parent.equals(col + 1, row))
+                if(isValid(col + 1, row) && !parent.equals(col + 1, row))
                 {
                     droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
                     listNewCases.add(droite);
                 }
                 
                 //( 0 , -1 )
-                if(isInGrid(col, row - 1) && !parent.equals(col, row - 1))
+                if(isValid(col, row - 1) && !parent.equals(col, row - 1))
                 {
                     bas = new Case(col, row - 1, valG + 1, opportunite, arrivee);
                     listNewCases.add(bas);
                 }
                 
                 //( 0 , +1 )
-                if(isInGrid(col, row + 1) && !parent.equals(col, row + 1))
+                if(isValid(col, row + 1) && !parent.equals(col, row + 1))
                 {
                     haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
                     listNewCases.add(haut);
@@ -139,8 +140,8 @@ public class Grid extends Observable
                 //endregion
             }
             
-            listToExplore.add(getLowerF(listNewCases));
             
+            listToExplore.add(getLowerF(listNewCases));
             System.out.println(getLowerF(listNewCases));
             
             setChanged();
@@ -165,9 +166,14 @@ public class Grid extends Observable
         return reference;
     }
     
-    private Boolean isInGrid (int Column, int Row)
+    private Boolean isValid (int Column, int Row)
     {
-        return (Column <= width) && (Row <= height);
+        if(Column < 0) return false;
+        if(Column > width) return false;
+        if(Row < 0) return false;
+        if(Row > height) return false;
+        if(listMurs.contains(new Case(Column, Row))) return false;
+        if(listExplored.contains(new Case(Column, Row))) return false;
+        return true;
     }
-    
 }

@@ -2,10 +2,10 @@ package PathFinder;
 
 public class Case
 {
-    private int  valueG;
-    private int  valueH;
-    private int  valueF;
-    private Case parent;
+    private int      valueG;
+    private int      valueH;
+    private int      valueF;
+    private Case     parent;
     
     private int row;
     private int column;
@@ -20,7 +20,7 @@ public class Case
     {
         column = Column;
         row = Row;
-    
+        
         valueG = 0;
         valueH = getManathanDistance(Arrivee);
         valueF = valueG + valueH;
@@ -31,7 +31,7 @@ public class Case
     {
         column = Column;
         row = Row;
-    
+        
         valueG = ValueG;
         valueH = getManathanDistance(Arrivee);
         valueF = valueG + valueH;
@@ -42,7 +42,7 @@ public class Case
     {
         column = Column;
         row = Row;
-    
+        
         valueG = ValueG;
         valueH = ValueH;
         valueF = valueG + valueH;

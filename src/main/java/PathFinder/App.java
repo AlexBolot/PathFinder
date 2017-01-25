@@ -23,7 +23,7 @@ public class App extends Application
         {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Grid.fxml"));
             primaryStage.setTitle("Grid");
-            primaryStage.setScene(new Scene(root, 500, 450));
+            primaryStage.setScene(new Scene(root, 600, 500));
             primaryStage.setResizable(false);
             primaryStage.show();
         }
