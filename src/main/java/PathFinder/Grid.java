@@ -110,19 +110,6 @@ public class Grid extends Observable
             {
                 //region ...
                 Case parent = opportunite.getParent();
-                //( -1 , 0 )
-                if(isValid(col - 1, row) && !parent.equals(col - 1, row))
-                {
-                    gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
-                    listNewCases.add(gauche);
-                }
-                
-                //( +1 , 0 )
-                if(isValid(col + 1, row) && !parent.equals(col + 1, row))
-                {
-                    droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
-                    listNewCases.add(droite);
-                }
                 
                 //( 0 , -1 )
                 if(isValid(col, row - 1) && !parent.equals(col, row - 1))
@@ -137,9 +124,23 @@ public class Grid extends Observable
                     haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
                     listNewCases.add(haut);
                 }
+                
+                //( +1 , 0 )
+                if(isValid(col + 1, row) && !parent.equals(col + 1, row))
+                {
+                    droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
+                    listNewCases.add(droite);
+                    
+                }
+                
+                //( -1 , 0 )
+                if(isValid(col - 1, row) && !parent.equals(col - 1, row))
+                {
+                    gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
+                    listNewCases.add(gauche);
+                }
                 //endregion
             }
-            
             
             listToExplore.add(getLowerF(listNewCases));
             System.out.println(getLowerF(listNewCases));

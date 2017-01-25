@@ -116,11 +116,6 @@ public class Case
         int rowDistance = Math.abs(this.getRow() - c.getRow());
         int columnDistance = Math.abs(this.getColumn() - c.getColumn());
         
-        /*System.out.println("thisRow " + this.getRow());
-        System.out.println("thisCol " + this.getColumn());
-        System.out.println("cRow " + c.getRow());
-        System.out.println("cCol " + c.getColumn());*/
-        
         return rowDistance + columnDistance;
     }
     
