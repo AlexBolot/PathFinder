@@ -1550,7 +1550,8 @@
                 </TextField>
             </children>
         </GridPane>
-        <Button layoutX="110.0" layoutY="460.0" mnemonicParsing="false" onAction="#Solve_onAction" text="Solve" />
+        <Button layoutX="57.0" layoutY="460.0" mnemonicParsing="false" onAction="#Solve_onAction" text="Solve" />
         <Button layoutX="418.0" layoutY="460.0" mnemonicParsing="false" onAction="#Reset_onAction" text="Reset" />
+      <Button layoutX="152.0" layoutY="460.0" mnemonicParsing="false" onAction="#GenerateWalls_onAction" text="Generate Walls" />
     </children>
 </Pane>

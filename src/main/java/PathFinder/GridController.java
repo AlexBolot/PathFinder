@@ -9,15 +9,17 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GridController
 {
-    private final String Rouge      = "FireBrick";
-    private final String Vert       = "LimeGreen";
-    private final String Bleu       = "CornflowerBlue";
-    private final String Noir       = "Black";
-    private final int    GridWidth  = 19;
-    private final int    GridHeight = 14;
+    private final String          Rouge      = "FireBrick";
+    private final String          Vert       = "LimeGreen";
+    private final String          Bleu       = "CornflowerBlue";
+    private final String          Noir       = "Black";
+    private final int             GridWidth  = 19;
+    private final int             GridHeight = 14;
+    private       ArrayList<Case> listMurs   = new ArrayList<Case>();
     
     @FXML
     private GridPane gridPane;
@@ -38,6 +40,48 @@ public class GridController
             }
         }
         return null;
+    }
+    
+    public void GenerateWalls_onAction (ActionEvent actionEvent)
+    {
+        Reset_onAction(new ActionEvent());
+        
+        for (int i = 0; i < ThreadLocalRandom.current().nextInt(40, 50); i++)
+        {
+            int Col = ThreadLocalRandom.current().nextInt(0, 19 + 1);
+            int Row = ThreadLocalRandom.current().nextInt(0, 14 + 1);
+            
+            Node node = cell(Col, Row);
+            
+            if(node instanceof TextField)
+            {
+                //region Get char c
+                char c;
+                
+                if(((TextField) node).getText().isEmpty())
+                {
+                    c = ' ';
+                }
+                else
+                {
+                    c = ((TextField) node).getText().toLowerCase().charAt(0);
+                }
+                //endregion
+                
+                switch (c)
+                {
+                    case 'd':
+                        break;
+                    
+                    case 'a':
+                        break;
+                    
+                    default:
+                        colorNode(node, Noir, "M");
+                        break;
+                }
+            }
+        }
     }
     
     public void Reset_onAction (ActionEvent actionEvent)
@@ -62,9 +106,11 @@ public class GridController
                 switch (c)
                 {
                     case 'd':
+                        colorNode(node, Vert, "D");
                         break;
-                    
+    
                     case 'a':
+                        colorNode(node, Rouge, "A");
                         break;
                     
                     default:
@@ -86,8 +132,6 @@ public class GridController
         
         int arriveeCol = GridHeight;
         int arriveeRow = GridWidth;
-        
-        ArrayList<Case> listMurs = new ArrayList<Case>();
         
         for (Node node : gridPane.getChildren())
         {
@@ -111,15 +155,13 @@ public class GridController
                     case 'd':
                         departCol = GridPane.getColumnIndex(node);
                         departRow = GridPane.getRowIndex(node);
-                        colorNode(node, Vert);
-                        ((TextField) node).setText("D");
+                        colorNode(node, Vert, "D");
                         break;
                     
                     case 'a':
                         arriveeCol = GridPane.getColumnIndex(node);
                         arriveeRow = GridPane.getRowIndex(node);
-                        colorNode(node, Rouge);
-                        ((TextField) node).setText("A");
+                        colorNode(node, Rouge, "A");
                         break;
                     
                     case ' ':
@@ -133,8 +175,7 @@ public class GridController
                         
                         listMurs.add(new Case(murCol, murRow));
                         
-                        colorNode(node, Noir);
-                        ((TextField) node).setText("M");
+                        colorNode(node, Noir, "M");
                         break;
                     
                     default:
@@ -149,7 +190,7 @@ public class GridController
         depart = new Case(departCol, departRow, arrivee);
         
         ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listMurs).Solve();
-    
+        
         Collections.reverse(solutions);
         int stepCount = 0;
         
@@ -165,6 +206,8 @@ public class GridController
         }
         
         System.out.println("=== Fini ===");
+        
+        listMurs.clear();
     }
     
     private void colorNode (Node node, String couleur)
@@ -183,5 +226,4 @@ public class GridController
             ((TextField) node).setText(text);
         }
     }
-    
 }
