@@ -1,10 +1,8 @@
 package PathFinder;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Grid extends Observable
+public class Grid
 {
     private Case            depart;
     private Case            arrivee;
@@ -13,10 +11,10 @@ public class Grid extends Observable
     private ArrayList<Case> listToExplore;
     private ArrayList<Case> listExplored;
     private ArrayList<Case> listMurs;
+    private ArrayList<Case> listSolution = new ArrayList<Case>();
     
-    Grid (Case Depart, Case Arrivee, int Width, int Height, ArrayList<Case> ListMurs, Observer observer)
+    Grid (Case Depart, Case Arrivee, int Width, int Height, ArrayList<Case> ListMurs)
     {
-        this.addObserver(observer);
         depart = Depart;
         arrivee = Arrivee;
         width = Width;
@@ -72,7 +70,7 @@ public class Grid extends Observable
     }
     //endregion
     
-    void Solve ()
+    ArrayList<Case> Solve ()
     {
         Case opportunite = getLowerF(listToExplore);
         
@@ -85,25 +83,36 @@ public class Grid extends Observable
             int row = opportunite.getRow();
             int valG = opportunite.getValueG();
             
-            Case gauche = null;
-            Case droite = null;
-            Case bas = null;
-            Case haut = null;
+            Case gauche;
+            Case droite;
+            Case bas;
+            Case haut;
             
             ArrayList<Case> listNewCases = new ArrayList<Case>();
             
             if(opportunite.equals(depart))
             {
                 //region ...
-                if(isValid(col - 1, row)) gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
-                if(isValid(col + 1, row)) droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
-                if(isValid(col, row - 1)) bas = new Case(col, row - 1, valG + 1, opportunite, arrivee);
-                if(isValid(col, row + 1)) haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
-                
-                listNewCases.add(gauche);
-                listNewCases.add(droite);
-                listNewCases.add(bas);
-                listNewCases.add(haut);
+                if(isValid(col - 1, row))
+                {
+                    gauche = new Case(col - 1, row, valG + 1, opportunite, arrivee);
+                    listNewCases.add(gauche);
+                }
+                if(isValid(col + 1, row))
+                {
+                    droite = new Case(col + 1, row, valG + 1, opportunite, arrivee);
+                    listNewCases.add(droite);
+                }
+                if(isValid(col, row - 1))
+                {
+                    bas = new Case(col, row - 1, valG + 1, opportunite, arrivee);
+                    listNewCases.add(bas);
+                }
+                if(isValid(col, row + 1))
+                {
+                    haut = new Case(col, row + 1, valG + 1, opportunite, arrivee);
+                    listNewCases.add(haut);
+                }
                 //endregion
             }
             else
@@ -142,13 +151,30 @@ public class Grid extends Observable
                 //endregion
             }
             
-            listToExplore.add(getLowerF(listNewCases));
-            System.out.println(getLowerF(listNewCases));
-            
-            setChanged();
-            notifyObservers(arrivee);
+            listToExplore.addAll(listNewCases);
             
             Solve();
+        }
+        else
+        {
+            getLisSolution(opportunite);
+        }
+        return listSolution;
+    }
+    
+    private void getLisSolution (Case c)
+    {
+        if(!c.getParent().equals(depart))
+        {
+            if(!c.equals(arrivee))
+            {
+                listSolution.add(c);
+            }
+            getLisSolution(c.getParent());
+        }
+        else
+        {
+            listSolution.add(c);
         }
     }
     

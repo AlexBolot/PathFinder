@@ -8,10 +8,9 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.Collections;
 
-public class GridController implements Observer
+public class GridController
 {
     private final String Rouge      = "FireBrick";
     private final String Vert       = "LimeGreen";
@@ -19,7 +18,6 @@ public class GridController implements Observer
     private final String Noir       = "Black";
     private final int    GridWidth  = 19;
     private final int    GridHeight = 14;
-    private       int    stepCount  = 0;
     
     @FXML
     private GridPane gridPane;
@@ -44,8 +42,6 @@ public class GridController implements Observer
     
     public void Reset_onAction (ActionEvent actionEvent)
     {
-        stepCount = 0;
-        
         for (Node node : gridPane.getChildren())
         {
             if(node instanceof TextField)
@@ -82,8 +78,6 @@ public class GridController implements Observer
     
     public void Solve_onAction (ActionEvent actionEvent)
     {
-        stepCount = 0;
-        
         Case depart;
         Case arrivee;
         
@@ -154,8 +148,21 @@ public class GridController implements Observer
         arrivee = new Case(arriveeCol, arriveeRow);
         depart = new Case(departCol, departRow, arrivee);
         
-        new Grid(depart, arrivee, GridWidth, GridHeight, listMurs, this).Solve();
+        ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listMurs).Solve();
+    
+        Collections.reverse(solutions);
+        int stepCount = 0;
         
+        for (Case c : solutions)
+        {
+            if(c != null)
+            {
+                Node node = cell(c.getColumn(), c.getRow());
+                colorNode(node, Bleu, stepCount++ + "");
+                
+                System.out.println(c);
+            }
+        }
         
         System.out.println("=== Fini ===");
     }
@@ -168,24 +175,12 @@ public class GridController implements Observer
         }
     }
     
-    public void update (Observable observable, Object arrivee)
+    private void colorNode (Node node, String couleur, String text)
     {
-        if(observable instanceof Grid && arrivee instanceof Case)
+        if(node instanceof TextField)
         {
-            Grid grid = (Grid) observable;
-            
-            for (Case c : grid.getListToExplore())
-            {
-                if(!c.equals(arrivee))
-                {
-                    Node node = cell(c.getColumn(), c.getRow());
-                    if(node instanceof TextField)
-                    {
-                        node.setStyle("-fx-background-color: " + Bleu + ";");
-                        ((TextField) node).setText("" + stepCount++);
-                    }
-                }
-            }
+            node.setStyle("-fx-background-color: " + couleur + ";");
+            ((TextField) node).setText(text);
         }
     }
     
