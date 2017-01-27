@@ -10,6 +10,8 @@ public class Case
     private int row;
     private int column;
     
+    //region Constructors
+    
     Case (int Column, int Row)
     {
         column = Column;
@@ -49,65 +51,32 @@ public class Case
         parent = Parent;
     }
     
+    //endregion
+    
     //region Getters Setters
-    public int getValueG ()
+    int getValueG ()
     {
         return valueG;
     }
     
-    public void setValueG (int ValueG)
-    {
-        valueG = ValueG;
-    }
-    
-    public int getValueH ()
-    {
-        return valueH;
-    }
-    
-    public void setValueH (int valueH)
-    {
-        this.valueH = valueH;
-    }
-    
-    public int getValueF ()
+    int getValueF ()
     {
         return valueF;
     }
     
-    public void setValueF (int ValueF)
-    {
-        valueF = ValueF;
-    }
-    
-    public int getColumn ()
+    int getColumn ()
     {
         return column;
     }
     
-    public void setColumn (int Column)
-    {
-        column = Column;
-    }
-    
-    public int getRow ()
+    int getRow ()
     {
         return row;
     }
     
-    public void setRow (int Row)
-    {
-        row = Row;
-    }
-    
-    public Case getParent ()
+    Case getParent ()
     {
         return parent;
-    }
-    
-    public void setParent (Case Parent)
-    {
-        parent = Parent;
     }
     //endregion
     
@@ -135,6 +104,7 @@ public class Case
         return (getColumn() == col) && (getRow() == row);
     }
     
+    @Override
     public Case clone ()
     {
         return new Case(column, row, valueG, valueH, parent);

@@ -2,7 +2,7 @@ package PathFinder;
 
 import java.util.ArrayList;
 
-public class Grid
+class Grid
 {
     private Case            depart;
     private Case            arrivee;
@@ -25,50 +25,6 @@ public class Grid
         
         listToExplore.add(depart);
     }
-    
-    //region Getters
-    public Case getDepart ()
-    {
-        return depart;
-    }
-    
-    //region Setters
-    public void setDepart (Case Depart)
-    {
-        depart = Depart;
-    }
-    
-    public Case getArrivee ()
-    {
-        return arrivee;
-    }
-    
-    public void setArrivee (Case Arrivee)
-    {
-        arrivee = Arrivee;
-    }
-    //endregion
-    
-    public ArrayList<Case> getListToExplore ()
-    {
-        return listToExplore;
-    }
-    
-    public void setListToExplore (ArrayList<Case> ListToExplore)
-    {
-        listToExplore = ListToExplore;
-    }
-    
-    public ArrayList<Case> getListExplored ()
-    {
-        return listExplored;
-    }
-    
-    public void setListExplored (ArrayList<Case> ListExplored)
-    {
-        listExplored = ListExplored;
-    }
-    //endregion
     
     ArrayList<Case> Solve ()
     {

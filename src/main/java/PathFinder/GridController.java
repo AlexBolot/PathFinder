@@ -1,12 +1,10 @@
 package PathFinder;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,14 +19,9 @@ public class GridController
     private final int             GridHeight = 14;
     private       ArrayList<Case> listMurs   = new ArrayList<Case>();
     
-    @FXML
-    private GridPane gridPane;
     
     @FXML
-    public void initialize () throws IOException
-    {
-        
-    }
+    private GridPane gridPane;
     
     private Node cell (int col, int row)
     {
@@ -42,9 +35,9 @@ public class GridController
         return null;
     }
     
-    public void GenerateWalls_onAction (ActionEvent actionEvent)
+    public void GenerateWalls_onAction ()
     {
-        Reset_onAction(new ActionEvent());
+        Reset_onAction();
         
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(40, 50); i++)
         {
@@ -84,7 +77,7 @@ public class GridController
         }
     }
     
-    public void Reset_onAction (ActionEvent actionEvent)
+    public void Reset_onAction ()
     {
         for (Node node : gridPane.getChildren())
         {
@@ -122,7 +115,7 @@ public class GridController
         }
     }
     
-    public void Solve_onAction (ActionEvent actionEvent)
+    public void Solve_onAction ()
     {
         Case depart;
         Case arrivee;
@@ -208,14 +201,6 @@ public class GridController
         System.out.println("=== Fini ===");
         
         listMurs.clear();
-    }
-    
-    private void colorNode (Node node, String couleur)
-    {
-        if(node instanceof TextField)
-        {
-            node.setStyle("-fx-background-color: " + couleur + ";");
-        }
     }
     
     private void colorNode (Node node, String couleur, String text)
