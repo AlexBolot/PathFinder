@@ -77,7 +77,7 @@ public class Grid
         listToExplore.remove(opportunite);
         listExplored.add(opportunite);
         
-        if(!opportunite.equals(arrivee))
+        while (!opportunite.equals(arrivee))
         {
             int col = opportunite.getColumn();
             int row = opportunite.getRow();
@@ -153,12 +153,16 @@ public class Grid
             
             listToExplore.addAll(listNewCases);
             
-            Solve();
+            
+            opportunite = getLowerF(listToExplore);
+            
+            listToExplore.remove(opportunite);
+            listExplored.add(opportunite);
+            
         }
-        else
-        {
-            getLisSolution(opportunite);
-        }
+        
+        getLisSolution(opportunite);
+        
         return listSolution;
     }
     
