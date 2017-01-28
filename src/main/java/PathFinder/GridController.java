@@ -7,21 +7,31 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GridController
 {
-    private final String          Rouge      = "FireBrick";
-    private final String          Vert       = "LimeGreen";
-    private final String          Bleu       = "CornflowerBlue";
-    private final String          Noir       = "Black";
-    private final int             GridWidth  = 19;
-    private final int             GridHeight = 14;
-    private       ArrayList<Case> listMurs   = new ArrayList<Case>();
-    
+    private final String                    Rouge       = "FireBrick";
+    private final String                    Vert        = "LimeGreen";
+    private final String                    Bleu        = "CornflowerBlue";
+    private final String                    Noir        = "Black";
+    private final String                    Marron      = "Brown";
+    private final int                       GridWidth   = 19;
+    private final int                       GridHeight  = 14;
+    private       HashMap<String, ListCase> listManager = new HashMap<String, ListCase>();
     
     @FXML
     private GridPane gridPane;
+    
+    @FXML
+    public void initialize ()
+    {
+        listManager.put(CaseType.Depart, new ListCase("D", Vert));
+        listManager.put(CaseType.Arrivee, new ListCase("A", Rouge));
+        listManager.put(CaseType.Mur, new ListCase("M", Noir));
+        listManager.put(CaseType.Boue, new ListCase("B", Marron));
+    }
     
     private Node cell (int col, int row)
     {
@@ -41,37 +51,19 @@ public class GridController
         
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(40, 50); i++)
         {
-            int Col = ThreadLocalRandom.current().nextInt(0, 19 + 1);
-            int Row = ThreadLocalRandom.current().nextInt(0, 14 + 1);
+            int Col = ThreadLocalRandom.current().nextInt(0, GridWidth + 1);
+            int Row = ThreadLocalRandom.current().nextInt(0, GridHeight + 1);
             
             Node node = cell(Col, Row);
             
-            if(node instanceof TextField)
+            for (String listName : listManager.keySet())
             {
-                //region Get char c
-                char c;
-                
-                if(((TextField) node).getText().isEmpty())
+                if(!listManager.get(listName).Contains(new Case(Col, Row)))
                 {
-                    c = ' ';
-                }
-                else
-                {
-                    c = ((TextField) node).getText().toLowerCase().charAt(0);
-                }
-                //endregion
-                
-                switch (c)
-                {
-                    case 'd':
-                        break;
+                    ListCase listMurs = listManager.get(CaseType.Mur);
                     
-                    case 'a':
-                        break;
-                    
-                    default:
-                        colorNode(node, Noir, "M");
-                        break;
+                    listMurs.Add(new Case(Col, Row));
+                    colorNode(node, listMurs.getCouleur(), listMurs.getLogo());
                 }
             }
         }
@@ -79,110 +71,22 @@ public class GridController
     
     public void Reset_onAction ()
     {
-        for (Node node : gridPane.getChildren())
-        {
-            if(node instanceof TextField)
-            {
-                //region Get char c
-                char c;
-                
-                if(((TextField) node).getText().isEmpty())
-                {
-                    c = ' ';
-                }
-                else
-                {
-                    c = ((TextField) node).getText().toLowerCase().charAt(0);
-                }
-                //endregion
-                
-                switch (c)
-                {
-                    case 'd':
-                        colorNode(node, Vert, "D");
-                        break;
-    
-                    case 'a':
-                        colorNode(node, Rouge, "A");
-                        break;
-                    
-                    default:
-                        node.setStyle(null);
-                        ((TextField) node).setText("");
-                        break;
-                }
-            }
-        }
+        PopulateListManager();
     }
     
     public void Solve_onAction ()
     {
-        Case depart;
-        Case arrivee;
+        PopulateListManager();
         
-        int departCol = 0;
-        int departRow = 0;
+        Case aa = listManager.get(CaseType.Arrivee).GetFirst();
         
-        int arriveeCol = GridHeight;
-        int arriveeRow = GridWidth;
+        System.out.println(aa);
         
-        for (Node node : gridPane.getChildren())
-        {
-            if(node instanceof TextField)
-            {
-                //region Get char c
-                char c;
-                
-                if(((TextField) node).getText().isEmpty())
-                {
-                    c = ' ';
-                }
-                else
-                {
-                    c = ((TextField) node).getText().toLowerCase().charAt(0);
-                }
-                //endregion
-                
-                switch (c)
-                {
-                    case 'd':
-                        departCol = GridPane.getColumnIndex(node);
-                        departRow = GridPane.getRowIndex(node);
-                        colorNode(node, Vert, "D");
-                        break;
-                    
-                    case 'a':
-                        arriveeCol = GridPane.getColumnIndex(node);
-                        arriveeRow = GridPane.getRowIndex(node);
-                        colorNode(node, Rouge, "A");
-                        break;
-                    
-                    case ' ':
-                        node.setStyle(null);
-                        ((TextField) node).setText("");
-                        break;
-                    
-                    case 'm':
-                        int murCol = GridPane.getColumnIndex(node);
-                        int murRow = GridPane.getRowIndex(node);
-                        
-                        listMurs.add(new Case(murCol, murRow));
-                        
-                        colorNode(node, Noir, "M");
-                        break;
-                    
-                    default:
-                        node.setStyle(null);
-                        ((TextField) node).setText("");
-                        break;
-                }
-            }
-        }
+        Case arrivee = listManager.get(CaseType.Arrivee).GetFirst();
+        Case depart = listManager.get(CaseType.Depart).GetFirst();
+        depart.setArrivee(arrivee);
         
-        arrivee = new Case(arriveeCol, arriveeRow);
-        depart = new Case(departCol, departRow, arrivee);
-        
-        ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listMurs).Solve();
+        ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listManager).Solve();
         
         Collections.reverse(solutions);
         int stepCount = 0;
@@ -192,15 +96,21 @@ public class GridController
             if(c != null)
             {
                 Node node = cell(c.getColumn(), c.getRow());
-                colorNode(node, Bleu, stepCount++ + "");
+    
+                if(listManager.get(CaseType.Boue).Contains(c))
+                {
+                    colorNode(node, Marron, stepCount++ + "");
+                }
+                else
+                {
+                    colorNode(node, Bleu, stepCount++ + "");
+                }
                 
                 System.out.println(c);
             }
         }
         
         System.out.println("=== Fini ===");
-        
-        listMurs.clear();
     }
     
     private void colorNode (Node node, String couleur, String text)
@@ -211,4 +121,40 @@ public class GridController
             ((TextField) node).setText(text);
         }
     }
+    
+    private void PopulateListManager ()
+    {
+        ClearListManager();
+        
+        for (Node node : gridPane.getChildren())
+        {
+            if(node instanceof TextField)
+            {
+                String cellValue = ((TextField) node).getText();
+                
+                for (String listName : listManager.keySet())
+                {
+                    ListCase listCase = listManager.get(listName);
+                    
+                    if(listCase.getLogo().equalsIgnoreCase(cellValue))
+                    {
+                        int Col = GridPane.getColumnIndex(node);
+                        int Row = GridPane.getRowIndex(node);
+                        
+                        listCase.Add(new Case(Col, Row));
+                        colorNode(node, listCase.getCouleur(), listCase.getLogo());
+                    }
+                }
+            }
+        }
+    }
+    
+    private void ClearListManager ()
+    {
+        for (String listName : listManager.keySet())
+        {
+            listManager.get(listName).Clear();
+        }
+    }
+    
 }

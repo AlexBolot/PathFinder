@@ -2,10 +2,10 @@ package PathFinder;
 
 public class Case
 {
-    private int      valueG;
-    private int      valueH;
-    private int      valueF;
-    private Case     parent;
+    private int  valueG;
+    private int  valueH;
+    private int  valueF;
+    private Case parent;
     
     private int row;
     private int column;
@@ -77,6 +77,12 @@ public class Case
     Case getParent ()
     {
         return parent;
+    }
+    
+    void setArrivee (Case c)
+    {
+        valueF = getManathanDistance(c);
+        valueH = valueF + valueG;
     }
     //endregion
     
