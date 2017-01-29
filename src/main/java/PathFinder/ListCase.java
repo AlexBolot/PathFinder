@@ -2,6 +2,16 @@ package PathFinder;
 
 import java.util.ArrayList;
 
+/*................................................................................................................................
+ . Copyright (c)
+ .
+ . The ListCase	 Class was Coded by : Alexandre BOLOT
+ .
+ . Last Modified : 29/01/17 01:43
+ .
+ . Contact : bolotalex06@gmail.com
+ ...............................................................................................................................*/
+
 public class ListCase
 {
     private ArrayList<Case> cases;

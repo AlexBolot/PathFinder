@@ -5,6 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<!--
+  ~ Copyright (c)
+  ~
+  ~ The Grid.fxml	 Class was Coded by : Alexandre BOLOT
+  ~
+  ~ Last Modified : 26/01/17 22:58
+  ~
+  ~ Contact : bolotalex06@gmail.com
+  -->
+
 <Pane maxHeight="555.0" maxWidth="600.0" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PathFinder.GridController">
     <children>
         <GridPane fx:id="gridPane" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0">

@@ -10,6 +10,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
+/*................................................................................................................................
+ . Copyright (c)
+ .
+ . The GridController	 Class was Coded by : Alexandre BOLOT
+ .
+ . Last Modified : 28/01/17 18:11
+ .
+ . Contact : bolotalex06@gmail.com
+ ...............................................................................................................................*/
+
 public class GridController
 {
     private final String                    Rouge       = "FireBrick";

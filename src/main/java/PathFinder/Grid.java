@@ -3,6 +3,16 @@ package PathFinder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/*................................................................................................................................
+ . Copyright (c)
+ .
+ . The Grid	 Class was Coded by : Alexandre BOLOT
+ .
+ . Last Modified : 27/01/17 23:31
+ .
+ . Contact : bolotalex06@gmail.com
+ ...............................................................................................................................*/
+
 class Grid
 {
     private Case            depart;
