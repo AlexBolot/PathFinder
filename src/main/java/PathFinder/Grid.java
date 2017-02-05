@@ -21,11 +21,11 @@ class Grid
     private int             height;
     private ArrayList<Case> listToExplore;
     private ArrayList<Case> listExplored;
-    private ArrayList<Case>           listSolution = new ArrayList<Case>();
-    private HashMap<String, ListCase> listManager  = new HashMap<String, ListCase>();
+    private ArrayList<Case>             listSolution = new ArrayList<Case>();
+    private HashMap<CaseType, ListCase> listManager  = new HashMap<CaseType, ListCase>();
     
     
-    Grid (Case Depart, Case Arrivee, int Width, int Height, HashMap<String, ListCase> ListManager)
+    Grid (Case Depart, Case Arrivee, int Width, int Height, HashMap<CaseType, ListCase> ListManager)
     {
         depart = Depart;
         arrivee = Arrivee;
@@ -63,11 +63,7 @@ class Grid
                 //region ( 0 , -1 )
                 if(isValid(col, row - 1))
                 {
-                    bas = new Case(col,
-                                   row - 1,
-                                   valG + (isOfCaseType(col, row - 1, CaseType.Boue) ? 2 : 1),
-                                   opportunite,
-                                   arrivee);
+                    bas = new Case(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
                     listNewCases.add(bas);
                 }
                 //endregion
@@ -75,11 +71,7 @@ class Grid
                 //region ( 0 , +1 )
                 if(isValid(col, row + 1))
                 {
-                    haut = new Case(col,
-                                    row + 1,
-                                    valG + (isOfCaseType(col, row + 1, CaseType.Boue) ? 2 : 1),
-                                    opportunite,
-                                    arrivee);
+                    haut = new Case(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
                     listNewCases.add(haut);
                 }
                 //endregion
@@ -87,11 +79,7 @@ class Grid
                 //region ( +1 , 0 )
                 if(isValid(col + 1, row))
                 {
-                    droite = new Case(col + 1,
-                                      row,
-                                      valG + (isOfCaseType(col + 1, row, CaseType.Boue) ? 2 : 1),
-                                      opportunite,
-                                      arrivee);
+                    droite = new Case(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
                     listNewCases.add(droite);
                 }
                 //endregion
@@ -99,11 +87,7 @@ class Grid
                 //region ( -1 , 0 )
                 if(isValid(col - 1, row))
                 {
-                    gauche = new Case(col - 1,
-                                      row,
-                                      valG + (isOfCaseType(col - 1, row, CaseType.Boue) ? 2 : 1),
-                                      opportunite,
-                                      arrivee);
+                    gauche = new Case(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
                     listNewCases.add(gauche);
                 }
                 //endregion
@@ -115,11 +99,7 @@ class Grid
                 //region ( 0 , -1 )
                 if(isValid(col, row - 1) && !parent.equals(col, row - 1))
                 {
-                    bas = new Case(col,
-                                   row - 1,
-                                   valG + (isOfCaseType(col, row - 1, CaseType.Boue) ? 2 : 1),
-                                   opportunite,
-                                   arrivee);
+                    bas = new Case(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
                     
                     listNewCases.add(bas);
                 }
@@ -128,11 +108,7 @@ class Grid
                 //region ( 0 , +1 )
                 if(isValid(col, row + 1) && !parent.equals(col, row + 1))
                 {
-                    haut = new Case(col,
-                                    row + 1,
-                                    valG + (isOfCaseType(col, row + 1, CaseType.Boue) ? 2 : 1),
-                                    opportunite,
-                                    arrivee);
+                    haut = new Case(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
                     listNewCases.add(haut);
                 }
                 //endregion
@@ -140,11 +116,7 @@ class Grid
                 //region ( +1 , 0 )
                 if(isValid(col + 1, row) && !parent.equals(col + 1, row))
                 {
-                    droite = new Case(col + 1,
-                                      row,
-                                      valG + (isOfCaseType(col + 1, row, CaseType.Boue) ? 2 : 1),
-                                      opportunite,
-                                      arrivee);
+                    droite = new Case(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
                     listNewCases.add(droite);
                     
                 }
@@ -153,11 +125,7 @@ class Grid
                 //region ( -1 , 0 )
                 if(isValid(col - 1, row) && !parent.equals(col - 1, row))
                 {
-                    gauche = new Case(col - 1,
-                                      row,
-                                      valG + (isOfCaseType(col - 1, row, CaseType.Boue) ? 2 : 1),
-                                      opportunite,
-                                      arrivee);
+                    gauche = new Case(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
                     listNewCases.add(gauche);
                 }
                 //endregion
@@ -209,7 +177,7 @@ class Grid
     
     private Boolean isValid (int Column, int Row)
     {
-        String typeMur = CaseType.Mur;
+        CaseType typeMur = CaseType.MUR;
         
         if(Column < 0) return false;
         if(Column > width) return false;
@@ -218,14 +186,21 @@ class Grid
         if(listExplored.contains(new Case(Column, Row))) return false;
         if(listManager.containsKey(typeMur))
         {
-            if(listManager.get(typeMur).Contains(new Case(Column, Row))) return false;
+            if(listManager.get(typeMur).contains(new Case(Column, Row))) return false;
         }
         return true;
     }
     
-    private Boolean isOfCaseType (int Column, int Row, String caseType)
+    private int poidsDeCase (int Column, int Row)
     {
-        if(!listManager.containsKey(caseType)) return false;
-        return listManager.get(caseType).Contains(new Case(Column, Row));
+        for (CaseType type : listManager.keySet())
+        {
+            if(listManager.get(type).contains(new Case(Column, Row)))
+            {
+                return listManager.get(type).getPoids();
+            }
+        }
+        
+        return 1;
     }
 }

@@ -12,17 +12,18 @@ import java.util.ArrayList;
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public class ListCase
+class ListCase
 {
     private ArrayList<Case> cases;
     private String          logo;
     private String          couleur;
+    private int             poids;
     
-    
-    ListCase (String Logo, String Couleur)
+    ListCase (String Logo, String Couleur, int Poids)
     {
         logo = Logo;
         couleur = Couleur;
+        poids = Poids;
         cases = new ArrayList<Case>();
     }
     
@@ -31,17 +32,17 @@ public class ListCase
         cases.add(c);
     }
     
-    public ArrayList<Case> Get ()
+    ArrayList<Case> get ()
     {
         return cases;
     }
     
-    public Case GetFirst ()
+    Case getFirst ()
     {
         return cases.get(0);
     }
     
-    Boolean Contains (Case c)
+    Boolean contains (Case c)
     {
         return cases.contains(c);
     }
@@ -56,7 +57,12 @@ public class ListCase
         return couleur;
     }
     
-    void Clear ()
+    int getPoids ()
+    {
+        return poids;
+    }
+    
+    void clear ()
     {
         cases.clear();
     }

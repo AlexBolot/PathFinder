@@ -20,27 +20,29 @@ import java.util.concurrent.ThreadLocalRandom;
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
+@SuppressWarnings("FieldCanBeLocal")
 public class GridController
 {
-    private final String                    Rouge       = "FireBrick";
-    private final String                    Vert        = "LimeGreen";
-    private final String                    Bleu        = "CornflowerBlue";
-    private final String                    Noir        = "Black";
-    private final String                    Marron      = "Brown";
-    private final int                       GridWidth   = 19;
-    private final int                       GridHeight  = 14;
-    private       HashMap<String, ListCase> listManager = new HashMap<String, ListCase>();
+    private final String                      Rouge       = "FireBrick";
+    private final String                      Vert        = "LimeGreen";
+    private final String                      Bleu        = "CornflowerBlue";
+    private final String                      Noir        = "Black";
+    private final String                      Marron      = "Sienna";
+    private final int                         GridWidth   = 19;
+    private final int                         GridHeight  = 14;
+    private       HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
     
     @FXML
     private GridPane gridPane;
     
+    @SuppressWarnings("unused")
     @FXML
     public void initialize ()
     {
-        listManager.put(CaseType.Depart, new ListCase("D", Vert));
-        listManager.put(CaseType.Arrivee, new ListCase("A", Rouge));
-        listManager.put(CaseType.Mur, new ListCase("M", Noir));
-        listManager.put(CaseType.Boue, new ListCase("B", Marron));
+        listManager.put(CaseType.DEPART, new ListCase("D", Vert, 1));
+        listManager.put(CaseType.ARRIVEE, new ListCase("A", Rouge, 1));
+        listManager.put(CaseType.MUR, new ListCase("M", Noir, Integer.MAX_VALUE));
+        listManager.put(CaseType.BOUE, new ListCase("B", Marron, 2));
     }
     
     private Node cell (int col, int row)
@@ -59,6 +61,12 @@ public class GridController
     {
         Reset_onAction();
         
+        for (Case caseMur : listManager.get(CaseType.MUR).get())
+        {
+            Node node = cell(caseMur.getColumn(), caseMur.getRow());
+            clearNode(node);
+        }
+        
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(40, 50); i++)
         {
             int Col = ThreadLocalRandom.current().nextInt(0, GridWidth + 1);
@@ -66,21 +74,46 @@ public class GridController
             
             Node node = cell(Col, Row);
             
-            for (String listName : listManager.keySet())
+            boolean caseAvailable = true;
+            
+            for (CaseType type : listManager.keySet())
             {
-                if(!listManager.get(listName).Contains(new Case(Col, Row)))
+                if(listManager.get(type).contains(new Case(Col, Row)))
                 {
-                    ListCase listMurs = listManager.get(CaseType.Mur);
-                    
-                    listMurs.Add(new Case(Col, Row));
-                    colorNode(node, listMurs.getCouleur(), listMurs.getLogo());
+                    caseAvailable = false;
                 }
+            }
+            
+            if(caseAvailable)
+            {
+                ListCase listMurs = listManager.get(CaseType.MUR);
+                
+                listMurs.Add(new Case(Col, Row));
+                colorNode(node, listMurs.getCouleur(), listMurs.getLogo());
             }
         }
     }
     
     public void Reset_onAction ()
     {
+        for (Node node : gridPane.getChildren())
+        {
+            boolean isErasable = true;
+            
+            if(node instanceof TextField)
+            {
+                String cellValue = ((TextField) node).getText();
+                
+                for (CaseType type : listManager.keySet())
+                {
+                    ListCase listCase = listManager.get(type);
+                    
+                    if(listCase.getLogo().equalsIgnoreCase(cellValue)) isErasable = false;
+                }
+                
+                if(isErasable) clearNode(node);
+            }
+        }
         PopulateListManager();
     }
     
@@ -88,12 +121,12 @@ public class GridController
     {
         PopulateListManager();
         
-        Case aa = listManager.get(CaseType.Arrivee).GetFirst();
+        Case aa = listManager.get(CaseType.ARRIVEE).getFirst();
         
         System.out.println(aa);
         
-        Case arrivee = listManager.get(CaseType.Arrivee).GetFirst();
-        Case depart = listManager.get(CaseType.Depart).GetFirst();
+        Case arrivee = listManager.get(CaseType.ARRIVEE).getFirst();
+        Case depart = listManager.get(CaseType.DEPART).getFirst();
         depart.setArrivee(arrivee);
         
         ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listManager).Solve();
@@ -106,8 +139,8 @@ public class GridController
             if(c != null)
             {
                 Node node = cell(c.getColumn(), c.getRow());
-    
-                if(listManager.get(CaseType.Boue).Contains(c))
+                
+                if(listManager.get(CaseType.BOUE).contains(c))
                 {
                     colorNode(node, Marron, stepCount++ + "");
                 }
@@ -132,6 +165,15 @@ public class GridController
         }
     }
     
+    private void clearNode (Node node)
+    {
+        if(node instanceof TextField)
+        {
+            node.setStyle(null);
+            ((TextField) node).setText("");
+        }
+    }
+    
     private void PopulateListManager ()
     {
         ClearListManager();
@@ -142,9 +184,9 @@ public class GridController
             {
                 String cellValue = ((TextField) node).getText();
                 
-                for (String listName : listManager.keySet())
+                for (CaseType type : listManager.keySet())
                 {
-                    ListCase listCase = listManager.get(listName);
+                    ListCase listCase = listManager.get(type);
                     
                     if(listCase.getLogo().equalsIgnoreCase(cellValue))
                     {
@@ -161,10 +203,9 @@ public class GridController
     
     private void ClearListManager ()
     {
-        for (String listName : listManager.keySet())
+        for (CaseType type : listManager.keySet())
         {
-            listManager.get(listName).Clear();
+            listManager.get(type).clear();
         }
     }
-    
 }

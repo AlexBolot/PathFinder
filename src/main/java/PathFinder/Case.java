@@ -28,17 +28,6 @@ public class Case
         row = Row;
     }
     
-    Case (int Column, int Row, Case Arrivee)
-    {
-        column = Column;
-        row = Row;
-        
-        valueG = 0;
-        valueH = getManathanDistance(Arrivee);
-        valueF = valueG + valueH;
-        parent = null;
-    }
-    
     Case (int Column, int Row, int ValueG, Case Parent, Case Arrivee)
     {
         column = Column;
@@ -120,6 +109,7 @@ public class Case
         return (getColumn() == col) && (getRow() == row);
     }
     
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Case clone ()
     {
