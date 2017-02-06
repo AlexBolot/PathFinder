@@ -15,15 +15,17 @@ import java.util.HashMap;
 
 class Grid
 {
-    private Case            depart;
-    private Case            arrivee;
-    private int             width;
-    private int             height;
+    private Case depart;
+    private Case arrivee;
+    
+    private int width;
+    private int height;
+    
     private ArrayList<Case> listToExplore;
     private ArrayList<Case> listExplored;
-    private ArrayList<Case>             listSolution = new ArrayList<Case>();
-    private HashMap<CaseType, ListCase> listManager  = new HashMap<CaseType, ListCase>();
+    private ArrayList<Case> listSolution = new ArrayList<Case>();
     
+    private HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
     
     Grid (Case Depart, Case Arrivee, int Width, int Height, HashMap<CaseType, ListCase> ListManager)
     {

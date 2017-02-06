@@ -12,9 +12,10 @@ package PathFinder;
 
 public class Case
 {
-    private int  valueG;
-    private int  valueH;
-    private int  valueF;
+    private int valueG;
+    private int valueH;
+    private int valueF;
+    
     private Case parent;
     
     private int row;

@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
  .
  . The GridController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 28/01/17 18:11
+ . Last Modified : 06/02/17 11:40
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -23,14 +23,17 @@ import java.util.concurrent.ThreadLocalRandom;
 @SuppressWarnings("FieldCanBeLocal")
 public class GridController
 {
-    private final String                      Rouge       = "FireBrick";
-    private final String                      Vert        = "LimeGreen";
-    private final String                      Bleu        = "CornflowerBlue";
-    private final String                      Noir        = "Black";
-    private final String                      Marron      = "Sienna";
-    private final int                         GridWidth   = 19;
-    private final int                         GridHeight  = 14;
-    private       HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
+    private final String RED       = "FireBrick";
+    private final String GREEN     = "LimeGreen";
+    private final String BLUE      = "CornflowerBlue";
+    private final String DARK_BLUE = "DarkCyan";
+    private final String BLACK     = "Black";
+    private final String BROWN     = "Sienna";
+    
+    private final int GridWidth  = 19;
+    private final int GridHeight = 14;
+    
+    private HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
     
     @FXML
     private GridPane gridPane;
@@ -39,10 +42,11 @@ public class GridController
     @FXML
     public void initialize ()
     {
-        listManager.put(CaseType.DEPART, new ListCase("D", Vert, 1));
-        listManager.put(CaseType.ARRIVEE, new ListCase("A", Rouge, 1));
-        listManager.put(CaseType.MUR, new ListCase("M", Noir, Integer.MAX_VALUE));
-        listManager.put(CaseType.BOUE, new ListCase("B", Marron, 2));
+        listManager.put(CaseType.DEPART, new ListCase("D", GREEN, 1));
+        listManager.put(CaseType.ARRIVEE, new ListCase("A", RED, 1));
+        listManager.put(CaseType.MUR, new ListCase("M", BLACK, Integer.MAX_VALUE));
+        listManager.put(CaseType.BUISSON, new ListCase("B", BROWN, 2));
+        listManager.put(CaseType.EAU, new ListCase("E", DARK_BLUE, 3));
     }
     
     private Node cell (int col, int row)
@@ -103,12 +107,26 @@ public class GridController
             if(node instanceof TextField)
             {
                 String cellValue = ((TextField) node).getText();
+                String cellColor = "";
+                
+                if(node.getStyle().length() > 22)
+                {
+                    cellColor = node.getStyle().substring(22, node.getStyle().length() - 1);
+                }
                 
                 for (CaseType type : listManager.keySet())
                 {
                     ListCase listCase = listManager.get(type);
                     
-                    if(listCase.getLogo().equalsIgnoreCase(cellValue)) isErasable = false;
+                    boolean isSameLogo = listCase.getLogo().equalsIgnoreCase(cellValue);
+                    boolean hasText = !cellValue.isEmpty();
+                    boolean isSameColor = listCase.getCouleur().equalsIgnoreCase(cellColor);
+                    
+                    if(isSameLogo || (hasText && isSameColor))
+                    {
+                        isErasable = false;
+                        colorNode(node, listCase.getCouleur(), listCase.getLogo());
+                    }
                 }
                 
                 if(isErasable) clearNode(node);
@@ -140,13 +158,23 @@ public class GridController
             {
                 Node node = cell(c.getColumn(), c.getRow());
                 
-                if(listManager.get(CaseType.BOUE).contains(c))
+                boolean isCaseSpecial = false;
+                
+                for (CaseType type : listManager.keySet())
                 {
-                    colorNode(node, Marron, stepCount++ + "");
+                    ListCase listCase = listManager.get(type);
+                    
+                    if(listCase.contains(c))
+                    {
+                        isCaseSpecial = true;
+                        stepCount += listCase.getPoids();
+                        colorNode(node, listCase.getCouleur(), stepCount + "");
+                    }
                 }
-                else
+                
+                if(!isCaseSpecial)
                 {
-                    colorNode(node, Bleu, stepCount++ + "");
+                    colorNode(node, BLUE, ++stepCount + "");
                 }
                 
                 System.out.println(c);

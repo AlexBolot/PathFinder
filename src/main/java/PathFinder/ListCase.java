@@ -14,10 +14,11 @@ import java.util.ArrayList;
 
 class ListCase
 {
+    private String logo;
+    private String couleur;
+    private int    poids;
+    
     private ArrayList<Case> cases;
-    private String          logo;
-    private String          couleur;
-    private int             poids;
     
     ListCase (String Logo, String Couleur, int Poids)
     {
