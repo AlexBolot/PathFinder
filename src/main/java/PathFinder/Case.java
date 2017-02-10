@@ -5,12 +5,12 @@ package PathFinder;
  .
  . The Case	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 27/01/17 14:56
+ . Last Modified : 10/02/17 13:28
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public class Case
+public class Case implements Comparable
 {
     private int valueG;
     private int valueH;
@@ -121,5 +121,15 @@ public class Case
     public String toString ()
     {
         return "Case (" + column + "," + row + ")\n\tG = " + valueG + "\n\tH = " + valueH + "\n\tF = " + valueF;//+ "\n\tParent = " + parent;
+    }
+    
+    public int compareTo (Object o)
+    {
+        Case c1 = this;
+        Case c2 = (Case) o;
+        
+        if(c1.getValueF() < c2.getValueF()) return -1;
+        if(c1.getValueF() > c2.getValueF()) return 1;
+        return 0;
     }
 }

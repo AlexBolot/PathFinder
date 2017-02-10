@@ -1,50 +1,92 @@
 package PathFinder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /*................................................................................................................................
  . Copyright (c)
  .
  . The Grid	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 27/01/17 23:31
+ . Last Modified : 10/02/17 13:28
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
 class Grid
 {
-    private Case depart;
-    private Case arrivee;
-    
-    private int width;
-    private int height;
-    
-    private ArrayList<Case> listToExplore;
-    private ArrayList<Case> listExplored;
-    private ArrayList<Case> listSolution = new ArrayList<Case>();
-    
-    private HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
-    
-    Grid (Case Depart, Case Arrivee, int Width, int Height, HashMap<CaseType, ListCase> ListManager)
+    PriorityQueue<Case> listToExplore = new PriorityQueue<Case>(new Comparator<Case>()
     {
-        depart = Depart;
-        arrivee = Arrivee;
-        width = Width;
-        height = Height;
-        listToExplore = new ArrayList<Case>();
-        listExplored = new ArrayList<Case>();
-        listManager = ListManager;
+        public int compare (Case c1, Case c2)
+        {
+            return c1.compareTo(c2);
+        }
+    });
+    private Case            depart;
+    private Case            arrivee;
+    private int             width;
+    private int             height;
+    private ArrayList<Case> listExplored;
+    private ArrayList<Case> listSolution;
+    private ListManager     listManager;
+    
+    Grid (Case depart, Case arrivee, int width, int height, ListManager listManager)
+    {
+        setDepart(depart);
+        setArrivee(arrivee);
+        setWidth(width);
+        setHeight(height);
+        setListToExplore(new ArrayList<Case>());
+        setListExplored(new ArrayList<Case>());
+        setListManager(listManager);
+        listSolution = new ArrayList<Case>();
         
         listToExplore.add(depart);
     }
     
+    //region Getters Setters
+    private void setDepart (Case depart)
+    {
+        this.depart = depart;
+    }
+    
+    private void setArrivee (Case arrivee)
+    {
+        this.arrivee = arrivee;
+    }
+    
+    private void setWidth (int width)
+    {
+        this.width = width;
+    }
+    
+    private void setHeight (int height)
+    {
+        this.height = height;
+    }
+    
+    private void setListToExplore (ArrayList<Case> listToExplore)
+    {
+        this.listToExplore = new PriorityQueue<Case>();
+        this.listToExplore.addAll(listToExplore);
+    }
+    
+    private void setListExplored (ArrayList<Case> listExplored)
+    {
+        this.listExplored = new ArrayList<Case>();
+        this.listExplored.addAll(listExplored);
+    }
+    
+    private void setListManager (ListManager listManager)
+    {
+        this.listManager = listManager;
+    }
+    //endregion
+    
     ArrayList<Case> Solve ()
     {
-        Case opportunite = getLowerF(listToExplore);
-        
-        listToExplore.remove(opportunite);
+        Case opportunite = listToExplore.remove();
         listExplored.add(opportunite);
         
         while (!opportunite.equals(arrivee))
@@ -135,18 +177,16 @@ class Grid
             
             listToExplore.addAll(listNewCases);
             
-            opportunite = getLowerF(listToExplore);
-            
-            listToExplore.remove(opportunite);
+            opportunite = listToExplore.remove();
             listExplored.add(opportunite);
         }
         
-        getLisSolution(opportunite);
+        getListSolution(opportunite);
         
         return listSolution;
     }
     
-    private void getLisSolution (Case c)
+    private void getListSolution (Case c)
     {
         if(!c.getParent().equals(depart))
         {
@@ -154,27 +194,12 @@ class Grid
             {
                 listSolution.add(c);
             }
-            getLisSolution(c.getParent());
+            getListSolution(c.getParent());
         }
         else
         {
             listSolution.add(c);
         }
-    }
-    
-    private Case getLowerF (ArrayList<Case> listOfCases)
-    {
-        Case reference = listOfCases.get(0);
-        
-        for (Case c : listOfCases)
-        {
-            if(c.getValueF() < reference.getValueF())
-            {
-                reference = c.clone();
-            }
-        }
-        
-        return reference;
     }
     
     private Boolean isValid (int Column, int Row)

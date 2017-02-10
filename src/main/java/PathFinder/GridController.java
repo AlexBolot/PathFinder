@@ -1,13 +1,11 @@
 package PathFinder;
 
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*................................................................................................................................
@@ -15,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
  .
  . The GridController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 06/02/17 11:40
+ . Last Modified : 10/02/17 12:58
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -23,30 +21,19 @@ import java.util.concurrent.ThreadLocalRandom;
 @SuppressWarnings("FieldCanBeLocal")
 public class GridController
 {
-    private final String RED       = "FireBrick";
-    private final String GREEN     = "LimeGreen";
-    private final String BLUE      = "CornflowerBlue";
-    private final String DARK_BLUE = "DarkCyan";
-    private final String BLACK     = "Black";
-    private final String BROWN     = "Sienna";
+    private final String BLUE = "CornflowerBlue";
     
-    private final int GridWidth  = 19;
-    private final int GridHeight = 14;
+    public GridPane gridPane;
     
-    private HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
+    private int gridWidth;
+    private int gridHeight;
     
-    @FXML
-    private GridPane gridPane;
+    private ListManager listManager = new ListManager();
     
     @SuppressWarnings("unused")
-    @FXML
     public void initialize ()
     {
-        listManager.put(CaseType.DEPART, new ListCase("D", GREEN, 1));
-        listManager.put(CaseType.ARRIVEE, new ListCase("A", RED, 1));
-        listManager.put(CaseType.MUR, new ListCase("M", BLACK, Integer.MAX_VALUE));
-        listManager.put(CaseType.BUISSON, new ListCase("B", BROWN, 2));
-        listManager.put(CaseType.EAU, new ListCase("E", DARK_BLUE, 3));
+        
     }
     
     private Node cell (int col, int row)
@@ -64,6 +51,8 @@ public class GridController
     public void GenerateWalls_onAction ()
     {
         Reset_onAction();
+        gridWidth = gridPane.getColumnConstraints().size();
+        gridHeight = gridPane.getRowConstraints().size();
         
         for (Case caseMur : listManager.get(CaseType.MUR).get())
         {
@@ -73,8 +62,8 @@ public class GridController
         
         for (int i = 0; i < ThreadLocalRandom.current().nextInt(40, 50); i++)
         {
-            int Col = ThreadLocalRandom.current().nextInt(0, GridWidth + 1);
-            int Row = ThreadLocalRandom.current().nextInt(0, GridHeight + 1);
+            int Col = ThreadLocalRandom.current().nextInt(0, gridWidth + 1);
+            int Row = ThreadLocalRandom.current().nextInt(0, gridHeight + 1);
             
             Node node = cell(Col, Row);
             
@@ -138,7 +127,10 @@ public class GridController
     public void Solve_onAction ()
     {
         PopulateListManager();
-        
+    
+        gridWidth = gridPane.getColumnConstraints().size();
+        gridHeight = gridPane.getRowConstraints().size();
+    
         Case aa = listManager.get(CaseType.ARRIVEE).getFirst();
         
         System.out.println(aa);
@@ -147,7 +139,7 @@ public class GridController
         Case depart = listManager.get(CaseType.DEPART).getFirst();
         depart.setArrivee(arrivee);
         
-        ArrayList<Case> solutions = new Grid(depart, arrivee, GridWidth, GridHeight, listManager).Solve();
+        ArrayList<Case> solutions = new Grid(depart, arrivee, gridWidth, gridHeight, listManager).Solve();
         
         Collections.reverse(solutions);
         int stepCount = 0;
