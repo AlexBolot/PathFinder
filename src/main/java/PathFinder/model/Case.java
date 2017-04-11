@@ -1,11 +1,11 @@
-package PathFinder;
+package PathFinder.model;
 
 /*................................................................................................................................
  . Copyright (c)
  .
  . The Case	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 10/02/17 13:28
+ . Last Modified : 12/04/17 00:02
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -23,7 +23,7 @@ public class Case implements Comparable
     
     //region Constructors
     
-    Case (int Column, int Row)
+    public Case (int Column, int Row)
     {
         column = Column;
         row = Row;
@@ -54,32 +54,32 @@ public class Case implements Comparable
     //endregion
     
     //region Getters Setters
-    int getValueG ()
+    public int getValueG ()
     {
         return valueG;
     }
     
-    int getValueF ()
+    public int getValueF ()
     {
         return valueF;
     }
     
-    int getColumn ()
+    public int getColumn ()
     {
         return column;
     }
     
-    int getRow ()
+    public int getRow ()
     {
         return row;
     }
     
-    Case getParent ()
+    public Case getParent ()
     {
         return parent;
     }
     
-    void setArrivee (Case c)
+    public void setArrivee (Case c)
     {
         valueF = getManathanDistance(c);
         valueH = valueF + valueG;
@@ -105,7 +105,7 @@ public class Case implements Comparable
         return getRow() == aCase.getRow() && getColumn() == aCase.getColumn();
     }
     
-    boolean equals (int col, int row)
+    public boolean equals (int col, int row)
     {
         return (getColumn() == col) && (getRow() == row);
     }

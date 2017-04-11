@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<!--..............................................................................................................................
+  . Copyright (c)
+  .
+  . The Legend.fxml	 Class was Coded by : Alexandre BOLOT
+  .
+  . Last Modified : 12/04/17 00:02
+  .
+  . Contact : bolotalex06@gmail.com
+  .............................................................................................................................-->
+
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<!--
-  ~ Copyright (c)
-  ~
-  ~ The Legend.fxml	 Class was Coded by : Alexandre BOLOT
-  ~
-  ~ Last Modified : 10/02/17 13:34
-  ~
-  ~ Contact : bolotalex06@gmail.com
-  -->
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PathFinder.LegendController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8"
+      fx:controller="PathFinder.controller.LegendController">
    <children>
       <GridPane fx:id="gridPaneLegend" alignment="CENTER" gridLinesVisible="true" layoutX="15.0" layoutY="44.0" maxHeight="550.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="290.0" style="-fx-border-color: Black;">
         <columnConstraints>

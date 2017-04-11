@@ -1,16 +1,16 @@
-package PathFinder;
+package PathFinder.model;
 
 /*................................................................................................................................
  . Copyright (c)
  .
  . The CaseType	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 06/02/17 11:40
+ . Last Modified : 12/04/17 00:01
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-enum CaseType
+public enum CaseType
 {
     DEPART, ARRIVEE, MUR, BUISSON, EAU
 }

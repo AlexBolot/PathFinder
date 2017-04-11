@@ -1,5 +1,6 @@
-package PathFinder;
+package PathFinder.controller;
 
+import PathFinder.model.*;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -13,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
  .
  . The GridController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 10/02/17 12:58
+ . Last Modified : 12/04/17 00:01
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/

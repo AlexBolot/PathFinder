@@ -1,5 +1,8 @@
-package PathFinder;
+package PathFinder.controller;
 
+import PathFinder.model.CaseType;
+import PathFinder.model.ListCase;
+import PathFinder.model.ListManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -9,7 +12,7 @@ import javafx.scene.layout.GridPane;
  .
  . The LegendController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 10/02/17 13:35
+ . Last Modified : 12/04/17 00:01
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/

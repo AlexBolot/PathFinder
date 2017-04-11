@@ -1,4 +1,4 @@
-package PathFinder;
+package PathFinder.service;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  .
  . The App	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 10/02/17 12:05
+ . Last Modified : 12/04/17 00:01
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/

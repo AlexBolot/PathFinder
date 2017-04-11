@@ -1,4 +1,4 @@
-package PathFinder;
+package PathFinder.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,12 +9,12 @@ import java.util.PriorityQueue;
  .
  . The Grid	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 10/02/17 13:28
+ . Last Modified : 12/04/17 00:01
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-class Grid
+public class Grid
 {
     PriorityQueue<Case> listToExplore = new PriorityQueue<Case>(new Comparator<Case>()
     {
@@ -31,7 +31,7 @@ class Grid
     private ArrayList<Case> listSolution;
     private ListManager     listManager;
     
-    Grid (Case depart, Case arrivee, int width, int height, ListManager listManager)
+    public Grid (Case depart, Case arrivee, int width, int height, ListManager listManager)
     {
         setDepart(depart);
         setArrivee(arrivee);
@@ -84,7 +84,7 @@ class Grid
     }
     //endregion
     
-    ArrayList<Case> Solve ()
+    public ArrayList<Case> Solve ()
     {
         Case opportunite = listToExplore.remove();
         listExplored.add(opportunite);

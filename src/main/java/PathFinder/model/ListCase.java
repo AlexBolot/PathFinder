@@ -1,4 +1,4 @@
-package PathFinder;
+package PathFinder.model;
 
 import java.util.ArrayList;
 
@@ -7,12 +7,12 @@ import java.util.ArrayList;
  .
  . The ListCase	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 29/01/17 01:43
+ . Last Modified : 12/04/17 00:02
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-class ListCase
+public class ListCase
 {
     private String logo;
     private String couleur;
@@ -20,7 +20,7 @@ class ListCase
     
     private ArrayList<Case> cases;
     
-    ListCase (String Logo, String Couleur, int Poids)
+    public ListCase (String Logo, String Couleur, int Poids)
     {
         logo = Logo;
         couleur = Couleur;
@@ -28,42 +28,42 @@ class ListCase
         cases = new ArrayList<Case>();
     }
     
-    void Add (Case c)
+    public void Add (Case c)
     {
         cases.add(c);
     }
     
-    ArrayList<Case> get ()
+    public ArrayList<Case> get ()
     {
         return cases;
     }
     
-    Case getFirst ()
+    public Case getFirst ()
     {
         return cases.get(0);
     }
     
-    Boolean contains (Case c)
+    public Boolean contains (Case c)
     {
         return cases.contains(c);
     }
     
-    String getLogo ()
+    public String getLogo ()
     {
         return logo;
     }
     
-    String getCouleur ()
+    public String getCouleur ()
     {
         return couleur;
     }
     
-    int getPoids ()
+    public int getPoids ()
     {
         return poids;
     }
     
-    void clear ()
+    public void clear ()
     {
         cases.clear();
     }
