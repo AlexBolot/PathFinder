@@ -9,14 +9,14 @@ import java.util.PriorityQueue;
  .
  . The Grid	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:01
+ . Last Modified : 17/04/17 12:05
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
 public class Grid
 {
-    PriorityQueue<Case> listToExplore = new PriorityQueue<Case>(new Comparator<Case>()
+    private PriorityQueue<Case> listToExplore = new PriorityQueue<Case>(new Comparator<Case>()
     {
         public int compare (Case c1, Case c2)
         {
