@@ -13,10 +13,14 @@
 <li><a href="https://github.com/AlexBolot/PathFinder#21---controller ">Controller</a></li>
 <li><a href="https://github.com/AlexBolot/PathFinder#22---model ">Model</a></li>
 <ol>
-<li><a href="https://github.com/AlexBolot/PathFinder#221---app ">Case</a></li>
+<li><a href="https://github.com/AlexBolot/PathFinder#221---case ">Case</a></li>
 <li><a href="https://github.com/AlexBolot/PathFinder#222---grid ">Grid</a></li>
 </ol>
-<li><a href="https://github.com/AlexBolot/PathFinder#23---service ">Service</a></li>
+<li><a href="https://github.com/AlexBolot/PathFinder#23---service ">Service</a>
+<ol>
+<li><a href="https://github.com/AlexBolot/PathFinder#231---app ">App</a></li>
+</ol>
+</li>
 </ol>
 </li>
 <li><a href="https://github.com/AlexBolot/PathFinder/#3---coming-soon ">Coming soon</a></li>
@@ -77,3 +81,5 @@
 <p>Note : those libraries are already included in : org.jetbrains.idea.maven.model.MavenArchetype@88f75e0f</p>
 <h2>5 - Author</h2>
 <p>Alexandre BOLOT<br />My <a href="https://github.com/AlexBolot">GitHub</a><br />My <a href="https://www.linkedin.com/in/alexandrebolot">LinkedIn</a></p>
+<nav><a href="https://html-cleaner.com/" rel="nofollow">HTML Cleaner</a> | <a href="http://htmltidy.net/" rel="nofollow">HTML Tidy</a> | <a href="http://htmlcheatsheet.com/" rel="nofollow">HTML CheatSheet</a> | <a href="https://htmlg.com/" rel="nofollow">Pro HTML Editor</a> | <a href="https://wordhtml.com/" rel="nofollow">Word to HTML</a></nav>
+<p>&ndash; Please leave this line unchanged or subscribe for a premium HTML editor membership at htmlg.com</p>
