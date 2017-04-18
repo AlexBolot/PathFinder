@@ -1,4 +1,6 @@
-<h1>PathFinder</h1>
+<h1>PathFinder
+<a href="https://www.codefactor.io/repository/github/alexbolot/pathfinder"><img src="https://www.codefactor.io/repository/github/alexbolot/pathfinder/badge" /></a>
+</h1>
 <h2>Summary :</h2>
 <ol>
 <li><a href="https://github.com/AlexBolot/PathFinder#1---about-the-project ">About the project</a><br />
