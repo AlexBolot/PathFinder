@@ -5,7 +5,6 @@
 <ol>
 <li><a href="https://github.com/AlexBolot/PathFinder#11---the-goal ">The goal</a></li>
 <li><a href="https://github.com/AlexBolot/PathFinder#12---how-to-use ">How to use</a></li>
-<li><a href="https://github.com/AlexBolot/PathFinder#13---selecting-types ">Selecting types</a></li>
 </ol>
 </li>
 <li><a href="https://github.com/AlexBolot/PathFinder#2---package-tree-organisation ">Package tree organisation</a>
@@ -45,13 +44,6 @@
 <li>Press 'Solve' to process and show the shortest path</li>
 <li>Pressing 'Reset' will remove the path but leave any specified node intact, so you can change them manually.</li>
 </ol>
-<h3>1.3 - Selecting types</h3>
-<p>Selecting the types of challenges you want to play with is made with the first GUI.<br />Two ListViews are displayed :</p>
-<ol>
-<li>The list of all known challenge types</li>
-<li>The list of the challenge types you want to use in this game</li>
-</ol>
-<p>You can Drag and Drop the challenge types to put them in the appropriate list.<br />When you are satisfied with you choice, just press the Start button to play !</p>
 <h2>2 - Package tree organisation</h2>
 <h3>2.1 - Controller</h3>
 <p>In this package, as the name says it, you will find the java classes working as controller of the JavaFX views (.fxml). There is not much more to say about this package.</p>
@@ -81,5 +73,3 @@
 <p>Note : those libraries are already included in : org.jetbrains.idea.maven.model.MavenArchetype@88f75e0f</p>
 <h2>5 - Author</h2>
 <p>Alexandre BOLOT<br />My <a href="https://github.com/AlexBolot">GitHub</a><br />My <a href="https://www.linkedin.com/in/alexandrebolot">LinkedIn</a></p>
-<nav><a href="https://html-cleaner.com/" rel="nofollow">HTML Cleaner</a> | <a href="http://htmltidy.net/" rel="nofollow">HTML Tidy</a> | <a href="http://htmlcheatsheet.com/" rel="nofollow">HTML CheatSheet</a> | <a href="https://htmlg.com/" rel="nofollow">Pro HTML Editor</a> | <a href="https://wordhtml.com/" rel="nofollow">Word to HTML</a></nav>
-<p>&ndash; Please leave this line unchanged or subscribe for a premium HTML editor membership at htmlg.com</p>
