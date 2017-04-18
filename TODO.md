@@ -5,5 +5,5 @@ The following list is the points I can upgrade if I have time.
 
 - [ ] Try to improve the performances
     - [ ] Maybe by using a int[] tab instead of ArrayLists
-- [ ] Adding UnitTesting, try to reach full coverage
+- [ ] Add UnitTesting, try to reach full coverage
 - [ ] Add JavaDoc
