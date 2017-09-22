@@ -3,33 +3,33 @@ package PathFinder.model;
 /*................................................................................................................................
  . Copyright (c)
  .
- . The Case	 Class was Coded by : Alexandre BOLOT
+ . The Cell	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:02
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public class Case implements Comparable
+public class Cell implements Comparable
 {
     private int valueG;
     private int valueH;
     private int valueF;
-    
-    private Case parent;
+
+    private Cell parent;
     
     private int row;
     private int column;
     
     //region Constructors
-    
-    public Case (int Column, int Row)
+
+    public Cell (int Column, int Row)
     {
         column = Column;
         row = Row;
     }
-    
-    Case (int Column, int Row, int ValueG, Case Parent, Case Arrivee)
+
+    Cell (int Column, int Row, int ValueG, Cell Parent, Cell Arrivee)
     {
         column = Column;
         row = Row;
@@ -39,8 +39,8 @@ public class Case implements Comparable
         valueF = valueG + valueH;
         parent = Parent;
     }
-    
-    private Case (int Column, int Row, int ValueG, int ValueH, Case Parent)
+
+    private Cell (int Column, int Row, int ValueG, int ValueH, Cell Parent)
     {
         column = Column;
         row = Row;
@@ -73,20 +73,20 @@ public class Case implements Comparable
     {
         return row;
     }
-    
-    public Case getParent ()
+
+    public Cell getParent ()
     {
         return parent;
     }
-    
-    public void setArrivee (Case c)
+
+    public void setArrivee (Cell c)
     {
         valueF = getManathanDistance(c);
         valueH = valueF + valueG;
     }
     //endregion
-    
-    private int getManathanDistance (Case c)
+
+    private int getManathanDistance (Cell c)
     {
         int rowDistance = Math.abs(this.getRow() - c.getRow());
         int columnDistance = Math.abs(this.getColumn() - c.getColumn());
@@ -98,11 +98,11 @@ public class Case implements Comparable
     public boolean equals (Object o)
     {
         if(this == o) return true;
-        if(!(o instanceof Case)) return false;
-        
-        Case aCase = (Case) o;
-        
-        return getRow() == aCase.getRow() && getColumn() == aCase.getColumn();
+        if (!(o instanceof Cell)) return false;
+
+        Cell aCell = (Cell) o;
+
+        return getRow() == aCell.getRow() && getColumn() == aCell.getColumn();
     }
     
     public boolean equals (int col, int row)
@@ -112,21 +112,21 @@ public class Case implements Comparable
     
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public Case clone ()
+    public Cell clone ()
     {
-        return new Case(column, row, valueG, valueH, parent);
+        return new Cell(column, row, valueG, valueH, parent);
     }
     
     @Override
     public String toString ()
     {
-        return "Case (" + column + "," + row + ")\n\tG = " + valueG + "\n\tH = " + valueH + "\n\tF = " + valueF;//+ "\n\tParent = " + parent;
+        return "Cell (" + column + "," + row + ")\n\tG = " + valueG + "\n\tH = " + valueH + "\n\tF = " + valueF;//+ "\n\tParent = " + parent;
     }
     
     public int compareTo (Object o)
     {
-        Case c1 = this;
-        Case c2 = (Case) o;
+        Cell c1 = this;
+        Cell c2 = (Cell) o;
         
         if(c1.getValueF() < c2.getValueF()) return -1;
         if(c1.getValueF() > c2.getValueF()) return 1;

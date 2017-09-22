@@ -8,43 +8,43 @@ import java.util.Set;
  .
  . The ListManager	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:01
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
 public class ListManager
 {
-    private HashMap<CaseType, ListCase> listManager = new HashMap<CaseType, ListCase>();
+    private HashMap<CellType, ListCase> listManager = new HashMap<CellType, ListCase>();
     
     public ListManager ()
     {
-        listManager.put(CaseType.DEPART, new ListCase("D", "LimeGreen", 1));
-        listManager.put(CaseType.ARRIVEE, new ListCase("A", "FireBrick", 1));
-        listManager.put(CaseType.MUR, new ListCase("M", "Black", Integer.MAX_VALUE));
-        listManager.put(CaseType.BUISSON, new ListCase("B", "Sienna", 2));
-        listManager.put(CaseType.EAU, new ListCase("E", "DarkCyan", 3));
+        listManager.put(CellType.DEPART, new ListCase("D", "LimeGreen", 1));
+        listManager.put(CellType.ARRIVEE, new ListCase("A", "FireBrick", 1));
+        listManager.put(CellType.MUR, new ListCase("M", "Black", Integer.MAX_VALUE));
+        listManager.put(CellType.BUISSON, new ListCase("B", "Sienna", 2));
+        listManager.put(CellType.EAU, new ListCase("E", "DarkCyan", 3));
     }
-    
-    public void put (CaseType caseType, ListCase listCase)
+
+    public void put (CellType cellType, ListCase listCase)
     {
-        if(listManager.containsKey(caseType)) return;
+        if (listManager.containsKey(cellType)) return;
         if(listManager.containsValue(listCase)) return;
-        
-        listManager.put(caseType, listCase);
+
+        listManager.put(cellType, listCase);
     }
-    
-    public ListCase get (CaseType caseType)
+
+    public ListCase get (CellType cellType)
     {
-        return listManager.get(caseType);
+        return listManager.get(cellType);
     }
-    
-    public Set<CaseType> keySet ()
+
+    public Set<CellType> keySet ()
     {
         return listManager.keySet();
     }
-    
-    public boolean containsKey (CaseType typeMur)
+
+    public boolean containsKey (CellType typeMur)
     {
         return listManager.containsKey(typeMur);
     }

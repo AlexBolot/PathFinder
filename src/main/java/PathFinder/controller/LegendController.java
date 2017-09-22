@@ -1,6 +1,6 @@
 package PathFinder.controller;
 
-import PathFinder.model.CaseType;
+import PathFinder.model.CellType;
 import PathFinder.model.ListCase;
 import PathFinder.model.ListManager;
 import javafx.fxml.FXML;
@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
  .
  . The LegendController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:01
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -27,11 +27,11 @@ public class LegendController
     public void initialize ()
     {
         int rowIndex = 0;
-        for (CaseType type : CaseType.values())
+        for (CellType type : CellType.values())
         {
             ListCase listCase = listManager.get(type);
-            
-            String poids = type.equals(CaseType.MUR) ? " " : listCase.getPoids() + "";
+
+            String poids = type.equals(CellType.MUR) ? " " : listCase.getPoids() + "";
             
             TextField txtName = new TextField(type.name());
             TextField txtColor = new TextField();

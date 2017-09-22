@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
  .
  . The GridController	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:01
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -54,10 +54,10 @@ public class GridController
         Reset_onAction();
         gridWidth = gridPane.getColumnConstraints().size();
         gridHeight = gridPane.getRowConstraints().size();
-        
-        for (Case caseMur : listManager.get(CaseType.MUR).get())
+
+        for (Cell cellMur : listManager.get(CellType.MUR).get())
         {
-            Node node = cell(caseMur.getColumn(), caseMur.getRow());
+            Node node = cell(cellMur.getColumn(), cellMur.getRow());
             clearNode(node);
         }
         
@@ -69,10 +69,10 @@ public class GridController
             Node node = cell(Col, Row);
             
             boolean caseAvailable = true;
-            
-            for (CaseType type : listManager.keySet())
+
+            for (CellType type : listManager.keySet())
             {
-                if(listManager.get(type).contains(new Case(Col, Row)))
+                if (listManager.get(type).contains(new Cell(Col, Row)))
                 {
                     caseAvailable = false;
                 }
@@ -80,9 +80,9 @@ public class GridController
             
             if(caseAvailable)
             {
-                ListCase listMurs = listManager.get(CaseType.MUR);
-                
-                listMurs.Add(new Case(Col, Row));
+                ListCase listMurs = listManager.get(CellType.MUR);
+
+                listMurs.Add(new Cell(Col, Row));
                 colorNode(node, listMurs.getCouleur(), listMurs.getLogo());
             }
         }
@@ -103,8 +103,8 @@ public class GridController
                 {
                     cellColor = node.getStyle().substring(22, node.getStyle().length() - 1);
                 }
-                
-                for (CaseType type : listManager.keySet())
+
+                for (CellType type : listManager.keySet())
                 {
                     ListCase listCase = listManager.get(type);
                     
@@ -131,29 +131,29 @@ public class GridController
     
         gridWidth = gridPane.getColumnConstraints().size();
         gridHeight = gridPane.getRowConstraints().size();
-    
-        Case aa = listManager.get(CaseType.ARRIVEE).getFirst();
+
+        Cell aa = listManager.get(CellType.ARRIVEE).getFirst();
         
         System.out.println(aa);
-        
-        Case arrivee = listManager.get(CaseType.ARRIVEE).getFirst();
-        Case depart = listManager.get(CaseType.DEPART).getFirst();
+
+        Cell arrivee = listManager.get(CellType.ARRIVEE).getFirst();
+        Cell depart = listManager.get(CellType.DEPART).getFirst();
         depart.setArrivee(arrivee);
-        
-        ArrayList<Case> solutions = new Grid(depart, arrivee, gridWidth, gridHeight, listManager).Solve();
+
+        ArrayList<Cell> solutions = new Grid(depart, arrivee, gridWidth, gridHeight, listManager).Solve();
         
         Collections.reverse(solutions);
         int stepCount = 0;
-        
-        for (Case c : solutions)
+
+        for (Cell c : solutions)
         {
             if(c != null)
             {
                 Node node = cell(c.getColumn(), c.getRow());
                 
                 boolean isCaseSpecial = false;
-                
-                for (CaseType type : listManager.keySet())
+
+                for (CellType type : listManager.keySet())
                 {
                     ListCase listCase = listManager.get(type);
                     
@@ -204,8 +204,8 @@ public class GridController
             if(node instanceof TextField)
             {
                 String cellValue = ((TextField) node).getText();
-                
-                for (CaseType type : listManager.keySet())
+
+                for (CellType type : listManager.keySet())
                 {
                     ListCase listCase = listManager.get(type);
                     
@@ -213,8 +213,8 @@ public class GridController
                     {
                         int Col = GridPane.getColumnIndex(node);
                         int Row = GridPane.getRowIndex(node);
-                        
-                        listCase.Add(new Case(Col, Row));
+
+                        listCase.Add(new Cell(Col, Row));
                         colorNode(node, listCase.getCouleur(), listCase.getLogo());
                     }
                 }
@@ -224,7 +224,7 @@ public class GridController
     
     private void ClearListManager ()
     {
-        for (CaseType type : listManager.keySet())
+        for (CellType type : listManager.keySet())
         {
             listManager.get(type).clear();
         }

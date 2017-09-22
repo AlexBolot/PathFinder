@@ -7,7 +7,7 @@ import java.util.ArrayList;
  .
  . The ListCase	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:02
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
@@ -17,35 +17,35 @@ public class ListCase
     private String logo;
     private String couleur;
     private int    poids;
-    
-    private ArrayList<Case> cases;
+
+    private ArrayList<Cell> cells;
     
     public ListCase (String Logo, String Couleur, int Poids)
     {
         logo = Logo;
         couleur = Couleur;
         poids = Poids;
-        cases = new ArrayList<Case>();
+        cells = new ArrayList<Cell>();
     }
-    
-    public void Add (Case c)
+
+    public void Add (Cell c)
     {
-        cases.add(c);
+        cells.add(c);
     }
-    
-    public ArrayList<Case> get ()
+
+    public ArrayList<Cell> get ()
     {
-        return cases;
+        return cells;
     }
-    
-    public Case getFirst ()
+
+    public Cell getFirst ()
     {
-        return cases.get(0);
+        return cells.get(0);
     }
-    
-    public Boolean contains (Case c)
+
+    public Boolean contains (Cell c)
     {
-        return cases.contains(c);
+        return cells.contains(c);
     }
     
     public String getLogo ()
@@ -65,6 +65,6 @@ public class ListCase
     
     public void clear ()
     {
-        cases.clear();
+        cells.clear();
     }
 }

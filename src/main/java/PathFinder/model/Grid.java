@@ -9,49 +9,49 @@ import java.util.PriorityQueue;
  .
  . The Grid	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 17/04/17 12:05
+ . Last Modified : 22/09/17 13:55
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
 public class Grid
 {
-    private PriorityQueue<Case> listToExplore = new PriorityQueue<Case>(new Comparator<Case>()
+    private PriorityQueue<Cell> listToExplore = new PriorityQueue<Cell>(new Comparator<Cell>()
     {
-        public int compare (Case c1, Case c2)
+        public int compare (Cell c1, Cell c2)
         {
             return c1.compareTo(c2);
         }
     });
-    private Case            depart;
-    private Case            arrivee;
+    private Cell            depart;
+    private Cell            arrivee;
     private int             width;
     private int             height;
-    private ArrayList<Case> listExplored;
-    private ArrayList<Case> listSolution;
+    private ArrayList<Cell> listExplored;
+    private ArrayList<Cell> listSolution;
     private ListManager     listManager;
-    
-    public Grid (Case depart, Case arrivee, int width, int height, ListManager listManager)
+
+    public Grid (Cell depart, Cell arrivee, int width, int height, ListManager listManager)
     {
         setDepart(depart);
         setArrivee(arrivee);
         setWidth(width);
         setHeight(height);
-        setListToExplore(new ArrayList<Case>());
-        setListExplored(new ArrayList<Case>());
+        setListToExplore(new ArrayList<Cell>());
+        setListExplored(new ArrayList<Cell>());
         setListManager(listManager);
-        listSolution = new ArrayList<Case>();
+        listSolution = new ArrayList<Cell>();
         
         listToExplore.add(depart);
     }
     
     //region Getters Setters
-    private void setDepart (Case depart)
+    private void setDepart (Cell depart)
     {
         this.depart = depart;
     }
-    
-    private void setArrivee (Case arrivee)
+
+    private void setArrivee (Cell arrivee)
     {
         this.arrivee = arrivee;
     }
@@ -65,16 +65,16 @@ public class Grid
     {
         this.height = height;
     }
-    
-    private void setListToExplore (ArrayList<Case> listToExplore)
+
+    private void setListToExplore (ArrayList<Cell> listToExplore)
     {
-        this.listToExplore = new PriorityQueue<Case>();
+        this.listToExplore = new PriorityQueue<Cell>();
         this.listToExplore.addAll(listToExplore);
     }
-    
-    private void setListExplored (ArrayList<Case> listExplored)
+
+    private void setListExplored (ArrayList<Cell> listExplored)
     {
-        this.listExplored = new ArrayList<Case>();
+        this.listExplored = new ArrayList<Cell>();
         this.listExplored.addAll(listExplored);
     }
     
@@ -83,10 +83,10 @@ public class Grid
         this.listManager = listManager;
     }
     //endregion
-    
-    public ArrayList<Case> Solve ()
+
+    public ArrayList<Cell> Solve ()
     {
-        Case opportunite = listToExplore.remove();
+        Cell opportunite = listToExplore.remove();
         listExplored.add(opportunite);
         
         while (!opportunite.equals(arrivee))
@@ -94,74 +94,74 @@ public class Grid
             int col = opportunite.getColumn();
             int row = opportunite.getRow();
             int valG = opportunite.getValueG();
-            
-            Case gauche;
-            Case droite;
-            Case bas;
-            Case haut;
-            
-            ArrayList<Case> listNewCases = new ArrayList<Case>();
+
+            Cell gauche;
+            Cell droite;
+            Cell bas;
+            Cell haut;
+
+            ArrayList<Cell> listNewCells = new ArrayList<Cell>();
             
             if(opportunite.equals(depart))
             {
                 //region ( 0 , -1 )
                 if(isValid(col, row - 1))
                 {
-                    bas = new Case(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
-                    listNewCases.add(bas);
+                    bas = new Cell(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
+                    listNewCells.add(bas);
                 }
                 //endregion
                 
                 //region ( 0 , +1 )
                 if(isValid(col, row + 1))
                 {
-                    haut = new Case(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
-                    listNewCases.add(haut);
+                    haut = new Cell(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
+                    listNewCells.add(haut);
                 }
                 //endregion
                 
                 //region ( +1 , 0 )
                 if(isValid(col + 1, row))
                 {
-                    droite = new Case(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
-                    listNewCases.add(droite);
+                    droite = new Cell(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
+                    listNewCells.add(droite);
                 }
                 //endregion
                 
                 //region ( -1 , 0 )
                 if(isValid(col - 1, row))
                 {
-                    gauche = new Case(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
-                    listNewCases.add(gauche);
+                    gauche = new Cell(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
+                    listNewCells.add(gauche);
                 }
                 //endregion
             }
             else
             {
-                Case parent = opportunite.getParent();
+                Cell parent = opportunite.getParent();
                 
                 //region ( 0 , -1 )
                 if(isValid(col, row - 1) && !parent.equals(col, row - 1))
                 {
-                    bas = new Case(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
-                    
-                    listNewCases.add(bas);
+                    bas = new Cell(col, row - 1, valG + poidsDeCase(col, row - 1), opportunite, arrivee);
+
+                    listNewCells.add(bas);
                 }
                 //endregion
                 
                 //region ( 0 , +1 )
                 if(isValid(col, row + 1) && !parent.equals(col, row + 1))
                 {
-                    haut = new Case(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
-                    listNewCases.add(haut);
+                    haut = new Cell(col, row + 1, valG + poidsDeCase(col, row + 1), opportunite, arrivee);
+                    listNewCells.add(haut);
                 }
                 //endregion
                 
                 //region ( +1 , 0 )
                 if(isValid(col + 1, row) && !parent.equals(col + 1, row))
                 {
-                    droite = new Case(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
-                    listNewCases.add(droite);
+                    droite = new Cell(col + 1, row, valG + poidsDeCase(col + 1, row), opportunite, arrivee);
+                    listNewCells.add(droite);
                     
                 }
                 //endregion
@@ -169,13 +169,13 @@ public class Grid
                 //region ( -1 , 0 )
                 if(isValid(col - 1, row) && !parent.equals(col - 1, row))
                 {
-                    gauche = new Case(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
-                    listNewCases.add(gauche);
+                    gauche = new Cell(col - 1, row, valG + poidsDeCase(col - 1, row), opportunite, arrivee);
+                    listNewCells.add(gauche);
                 }
                 //endregion
             }
-            
-            listToExplore.addAll(listNewCases);
+
+            listToExplore.addAll(listNewCells);
             
             opportunite = listToExplore.remove();
             listExplored.add(opportunite);
@@ -185,8 +185,8 @@ public class Grid
         
         return listSolution;
     }
-    
-    private void getListSolution (Case c)
+
+    private void getListSolution (Cell c)
     {
         if(!c.getParent().equals(depart))
         {
@@ -204,25 +204,25 @@ public class Grid
     
     private Boolean isValid (int Column, int Row)
     {
-        CaseType typeMur = CaseType.MUR;
+        CellType typeMur = CellType.MUR;
         
         if(Column < 0) return false;
         if(Column > width) return false;
         if(Row < 0) return false;
         if(Row > height) return false;
-        if(listExplored.contains(new Case(Column, Row))) return false;
+        if (listExplored.contains(new Cell(Column, Row))) return false;
         if(listManager.containsKey(typeMur))
         {
-            if(listManager.get(typeMur).contains(new Case(Column, Row))) return false;
+            if (listManager.get(typeMur).contains(new Cell(Column, Row))) return false;
         }
         return true;
     }
     
     private int poidsDeCase (int Column, int Row)
     {
-        for (CaseType type : listManager.keySet())
+        for (CellType type : listManager.keySet())
         {
-            if(listManager.get(type).contains(new Case(Column, Row)))
+            if (listManager.get(type).contains(new Cell(Column, Row)))
             {
                 return listManager.get(type).getPoids();
             }

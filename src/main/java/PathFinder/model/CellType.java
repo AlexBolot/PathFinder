@@ -3,14 +3,14 @@ package PathFinder.model;
 /*................................................................................................................................
  . Copyright (c)
  .
- . The CaseType	 Class was Coded by : Alexandre BOLOT
+ . The CellType	 Class was Coded by : Alexandre BOLOT
  .
- . Last Modified : 12/04/17 00:01
+ . Last Modified : 24/05/17 13:48
  .
  . Contact : bolotalex06@gmail.com
  ...............................................................................................................................*/
 
-public enum CaseType
+public enum CellType
 {
     DEPART, ARRIVEE, MUR, BUISSON, EAU
 }
